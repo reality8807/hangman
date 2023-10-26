@@ -33,7 +33,7 @@ while True:
                 if guess_letter == letter:
                     pos = word.find(guess_letter, start_pos)
                     guess[pos] = guess_letter
-                    start_pos += pos + 1
+                    start_pos = pos + 1
 
         if lives == 0:
             print("GAME OVER, you lose!")
