@@ -1,8 +1,7 @@
 from tkinter import *
 import requests
-import random
 
-# Random Word
+# Random Word from an API
 url = 'https://random-word-api.herokuapp.com/word'
 data = requests.get(url).json()[0]
 word = data.upper()
