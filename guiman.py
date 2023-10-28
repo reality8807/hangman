@@ -1,5 +1,14 @@
 from tkinter import *
 import requests
+import pygame
+
+# Initializing audio files
+pygame.mixer.init()
+correct_audio = pygame.mixer.Sound("audio/correct.mp3")
+wrong_audio = pygame.mixer.Sound("audio/wrong.mp3")
+win_audio = pygame.mixer.Sound("audio/win.mp3")
+lose_audio = pygame.mixer.Sound("audio/lose.mp3")
+wrong_audio.set_volume(0.2)
 
 # Random Word from an API
 url = 'https://random-word-api.herokuapp.com/word'
@@ -71,6 +80,7 @@ for i, _ in enumerate(LETTERS, 0):
 
 def correct_guess(b, letter):
     b.config(bg="#00e300")
+    correct_audio.play()
 
     start_pos = 0
     for let in word:
@@ -85,9 +95,11 @@ def correct_guess(b, letter):
 def wrong_guess(b):
     global lives
 
+    b.config(bg="#c40000")
+    wrong_audio.play()
+
     Label(root, image=images[lives]).grid(row=0, column=0, rowspan=2, padx=25, pady=25)
     lives += 1
-    b.config(bg="#c40000")
 
 
 def game_over():
@@ -97,11 +109,13 @@ def game_over():
     if lives == 7:
         Label(root, text="You Lose!", font=("Courier New", 20, "bold")).grid(row=2, column=0, columnspan=2, pady=25)
         disable_buttons()
+        lose_audio.play()
 
     # Win
     elif display_word["text"].replace(" ", "") == word:
         Label(root, text="You Win!", font=("Courier New", 20, "bold")).grid(row=2, column=0, columnspan=2, pady=25)
         disable_buttons()
+        win_audio.play()
 
 
 def disable_buttons():
